@@ -1,7 +1,0 @@
-# IDE-related files
-.classpath
-.project
-.settings/
-
-# Build directory
-target/
