@@ -4,6 +4,9 @@ import io.restassured.path.json.JsonPath;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import org.testng.Assert;
+
+import files.ReUsableMethods;
 import files.payload;
 
 //REST Assured Basic API Test
@@ -52,9 +55,15 @@ public class Basics {
 				.when().get("maps/api/place/get/json").then().assertThat().log().all().statusCode(200).extract()
 				.response().asString();
 
-		JsonPath js1 = new JsonPath(getPlaceResponse);
+		// Convert response string to JsonPath object using reusable method 
+		JsonPath js1 = ReUsableMethods.rawToJason(getPlaceResponse); 
+		// Extract the 'address' field from the response
 		String actualAddress = js1.getString("address");
-		System.out.println(actualAddress);
+		// Extract the 'address' field from the response
+		System.out.println(actualAddress); 
+		
+		// Validate that the actual address matches expected address
+		Assert.assertEquals(actualAddress, newAddress);
 
 		// Cucumber Junit, Testing
 
