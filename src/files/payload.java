@@ -25,4 +25,41 @@ public class payload {
 				+ "}\r\n"
 				+ "";
 	}
+	
+	public static String CoursePrice() {
+		return "{\r\n"
+				+ "  \"dashboard\": {\r\n"
+				+ "    \"purchaseAmount\": 200,\r\n"
+				+ "    \"website\": \"rahulshettyacademy.com\"\r\n"
+				+ "  }, \r\n"
+				+ "  \"courses\": [\r\n"
+				+ "    {\r\n"
+				+ "      \"title\": \"Selenium\",\r\n"
+				+ "      \"price\": 60,\r\n"
+				+ "      \"copies\": 6\r\n"
+				+ "    },\r\n"
+				+ "    {\r\n"
+				+ "      \"title\": \"Cypress\",\r\n"
+				+ "      \"price\": 40,\r\n"
+				+ "      \"copies\": 4\r\n"
+				+ "    },\r\n"
+				+ "    {\r\n"
+				+ "      \"title\": \"RPA\",\r\n"
+				+ "      \"price\": 50,\r\n"
+				+ "      \"copies\": 8\r\n"
+				+ "    },\r\n"
+				+ "    {\r\n"
+				+ "      \"title\": \"Rest API\",\r\n"
+				+ "      \"price\": 30,\r\n"
+				+ "      \"copies\": 9\r\n"
+				+ "    },\r\n"
+				+ "    {\r\n"
+				+ "      \"title\": \"Appiun\",\r\n"
+				+ "      \"price\": 20,\r\n"
+				+ "      \"copies\": 7\r\n"
+				+ "    }\r\n"
+				+ "  ]\r\n"
+				+ "}";
+	}
+	
 }
