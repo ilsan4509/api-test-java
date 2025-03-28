@@ -5,3 +5,6 @@
 
 # Build directory
 target/
+
+# Ignore test output files
+test-output/
