@@ -16,7 +16,7 @@ public class DynamicJson {
 		
 		// Send a POST request to the Add Book API
 		String response = given().header("Content-Type", "application/json")
-		.body(payload.Addbook())
+		.body(payload.Addbook("sdfsadf", "35332")).when()
 		.post("/Library/Addbook.php")
 		.then().log().all().assertThat().statusCode(200)
 		.extract().response().asString();
