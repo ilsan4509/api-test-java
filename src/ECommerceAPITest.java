@@ -4,10 +4,14 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 import pojo.LoginRequest;
 import pojo.LoginResponse;
+import pojo.OrderDetail;
+import pojo.Orders;
 
 import static io.restassured.RestAssured.given;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ECommerceAPITest {
 	
@@ -19,7 +23,7 @@ public class ECommerceAPITest {
 		
 		// Create a LoginRequest object and set the email and password
 		LoginRequest loginRequest = new LoginRequest();
-		loginRequest.setUserEmail("rahulshetty@gmail.com");
+		loginRequest.setUserEmail("anshika@gmail.com");
 		loginRequest.setUserPassword("Iamking@000");
 		
 		// Set the request specification, log the request, and send the login request
@@ -55,5 +59,30 @@ public class ECommerceAPITest {
 		JsonPath js = new JsonPath(addProductResponse);
 		String productId = js.get("productId");
 		System.out.println("productId= "+productId);
+		
+		// Create Order
+		// Create Order API request setup with authorization header
+		RequestSpecification createOrderBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addHeader("authorization", token).setContentType(ContentType.JSON)
+				.build();
+		
+		// Create an OrderDetail object and set the country and productId
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setCountry("India");
+		orderDetail.setProductOrderedId(productId);
+		
+		// Create a list of OrderDetail objects
+		List<OrderDetail> orderDetailList = new ArrayList<OrderDetail> ();
+		orderDetailList.add(orderDetail);
+		
+		// Create an Orders object and set the orders list
+		Orders orders = new Orders();
+		orders.setOrders(orderDetailList);
+		
+		// Send the POST request to create the order and extract the response
+		RequestSpecification createOrderReq = given().log().all().spec(createOrderBaseReq).body(orders);
+		String responseAddOrder = createOrderReq.when().post("/api/ecom/order/create-order").then().log().all().extract().response().asString();
+		System.out.println(responseAddOrder);
+		
 	}
 }
