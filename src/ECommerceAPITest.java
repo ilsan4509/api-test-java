@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.testng.Assert;
+
 public class ECommerceAPITest {
 	
 	public static void main (String[] args) {
@@ -39,6 +41,7 @@ public class ECommerceAPITest {
 		System.out.println(loginResponse.getUserId());
 		String userId = loginResponse.getUserId();
 		
+		
 		// Add Product 
 		// Add Product API request setup with authorization header
 		RequestSpecification addProductBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
@@ -59,6 +62,7 @@ public class ECommerceAPITest {
 		JsonPath js = new JsonPath(addProductResponse);
 		String productId = js.get("productId");
 		System.out.println("productId= "+productId);
+		
 		
 		// Create Order
 		// Create Order API request setup with authorization header
@@ -83,6 +87,25 @@ public class ECommerceAPITest {
 		RequestSpecification createOrderReq = given().log().all().spec(createOrderBaseReq).body(orders);
 		String responseAddOrder = createOrderReq.when().post("/api/ecom/order/create-order").then().log().all().extract().response().asString();
 		System.out.println(responseAddOrder);
+		
+		
+		// Delete Product
+		// Delete Product API request setup with authorization header
+		RequestSpecification deletePordBaseReq = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com")
+				.addHeader("authorization", token).setContentType(ContentType.JSON)
+				.build();
+		
+		// Set up the DELETE request with path parameter 'productId' for the product to be deleted
+		RequestSpecification deletePordReq = given().log().all().spec(deletePordBaseReq).pathParam("productId", productId);
+		
+		// Send the DELETE request to delete the product, and extract the response
+		String deleteProductResponse = deletePordReq.when().delete("/api/ecom/product/delete-product/{productId}").then().log().all()
+				.extract().response().asString();
+		
+		JsonPath jsDelete = new JsonPath(deleteProductResponse);
+		
+		// Assert that the deletion was successful by checking the response message
+		Assert.assertEquals("Product Deleted Successfully", jsDelete.get("message"));
 		
 	}
 }
